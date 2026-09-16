@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panyikani &amp; Angela — 27 May 2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --ink:#161513;
+    --stone:#6F6C66;
+    --line:#E6E3DD;
+    --wash:#F7F6F3;
+    --accent:#B08D57;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-weight:300;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img{display:block; width:100%; height:100%; object-fit:cover;}
+
+  /* ---------- nav ---------- */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:20;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px 48px;
+  }
+  .nav-mark{ font-size:0.95rem; letter-spacing:0.04em; }
+  .nav-right{ display:flex; align-items:center; gap:36px; }
+  .nav-links{ display:flex; gap:36px; list-style:none; font-size:0.85rem; }
+  .nav-links a{ text-decoration:none; opacity:0.7; transition:opacity .2s; }
+  .nav-links a:hover{ opacity:1; }
+  .contact-btn{
+    text-decoration:none;
+    font-size:0.82rem; letter-spacing:0.02em;
+    color:var(--ink);
+    border:1px solid var(--ink);
+    padding:9px 20px;
+    border-radius:999px;
+    transition:background .2s, color .2s;
+    white-space:nowrap;
+  }
+  .contact-btn:hover{ background:var(--ink); color:#fff; }
+
+  /* ---------- animation ---------- */
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(16px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .hero-content .eyebrow,
+  .hero-content h1,
+  .hero-content .date-line{
+    opacity:0;
+    animation:fadeUp 0.9s ease forwards;
+  }
+  .hero-content .eyebrow{ animation-delay:0.1s; }
+  .hero-content h1{ animation-delay:0.25s; }
+  .hero-content .date-line{ animation-delay:0.45s; }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(22px);
+    transition:opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  .detail-card.reveal:nth-child(2){ transition-delay:0.1s; }
+  .detail-card.reveal:nth-child(3){ transition-delay:0.2s; }
+  .tl-item.reveal:nth-child(2){ transition-delay:0.06s; }
+  .tl-item.reveal:nth-child(3){ transition-delay:0.12s; }
+  .tl-item.reveal:nth-child(4){ transition-delay:0.18s; }
+  .tl-item.reveal:nth-child(5){ transition-delay:0.24s; }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-content .eyebrow, .hero-content h1, .hero-content .date-line{
+      animation:none; opacity:1;
+    }
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex; align-items:center;
+    padding:140px 48px 80px;
+  }
+  .hero-content{ max-width:640px; margin:0 auto; text-align:center; }
+  .hero-content .eyebrow{
+    font-size:0.85rem; letter-spacing:0.04em; color:var(--stone); margin-bottom:24px;
+  }
+  .hero-content h1{
+    font-family:'Fraunces', serif; font-weight:300;
+    font-size:clamp(3rem, 9vw, 6rem);
+    line-height:1.02;
+  }
+  .hero-content .date-line{
+    margin-top:26px; font-size:1.05rem; letter-spacing:0.02em; color:var(--stone);
+  }
+
+  /* ---------- section shell ---------- */
+  section{ padding:100px 48px; }
+  .wrap{ max-width:1120px; margin:0 auto; }
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:24px; margin-bottom:56px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:22px;
+  }
+  .section-head .label{ font-size:0.82rem; color:var(--stone); letter-spacing:0.03em; }
+  .section-head h2{ font-family:'Fraunces', serif; font-weight:300; font-size:1.9rem; }
+
+  /* ---------- invitation photo ---------- */
+  .invitation{ background:var(--wash); }
+  .invite-frame{
+    max-width:440px; margin:0 auto;
+    box-shadow:0 30px 60px -30px rgba(22,21,19,0.35);
+  }
+  .invite-frame img{ width:100%; height:auto; object-fit:contain; display:block; }
+  .invite-caption{
+    text-align:center; margin-top:28px; font-size:0.9rem; color:var(--stone);
+  }
+
+  /* ---------- details ---------- */
+  .detail-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr);
+  }
+  .detail-card{
+    padding:0 36px;
+    border-left:1px solid var(--line);
+    transition:transform 0.4s ease;
+  }
+  .detail-card:hover{ transform:translateY(-4px); }
+  .detail-card:first-child{ border-left:none; padding-left:0; }
+  .detail-card .idx{ font-size:0.8rem; color:var(--stone); margin-bottom:16px; }
+  .detail-card h3{ font-family:'Fraunces', serif; font-weight:300; font-size:1.3rem; margin-bottom:10px; }
+  .detail-card p{ font-size:0.95rem; color:var(--stone); }
+
+  /* ---------- schedule ---------- */
+  .schedule{ background:var(--wash); }
+  .tl-row{ border-top:1px solid var(--line); }
+  .tl-item{
+    display:grid; grid-template-columns:120px 1fr;
+    gap:32px;
+    padding:26px 0;
+    border-bottom:1px solid var(--line);
+    transition:padding-left 0.35s ease;
+  }
+  .tl-item:hover{ padding-left:10px; }
+  .tl-time{ font-size:0.92rem; color:var(--stone); }
+  .tl-body h4{ font-family:'Fraunces', serif; font-weight:300; font-size:1.15rem; margin-bottom:4px; }
+  .tl-body p{ font-size:0.92rem; color:var(--stone); }
+
+  /* ---------- rsvp ---------- */
+  .rsvp{ background:var(--ink); color:var(--paper); }
+  .rsvp .section-head{ border-bottom-color:rgba(255,255,255,0.15); }
+  .rsvp .section-head .label{ color:rgba(255,255,255,0.55); }
+  .rsvp .section-head h2{ color:#fff; }
+  .rsvp-body{ display:grid; grid-template-columns:0.8fr 1.2fr; gap:72px; }
+  .rsvp-body p{ font-size:1rem; color:rgba(255,255,255,0.65); max-width:38ch; }
+  .rsvp-body p.gift-note{ margin-top:18px; font-size:0.88rem; color:rgba(255,255,255,0.5); }
+  form.rsvp-form{ display:flex; flex-direction:column; gap:22px; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  form.rsvp-form input, form.rsvp-form select{
+    background:transparent;
+    border:none; border-bottom:1px solid rgba(255,255,255,0.25);
+    color:#fff;
+    font-family:'Inter', sans-serif; font-size:1rem; font-weight:300;
+    padding:12px 2px;
+    outline:none;
+  }
+  form.rsvp-form select option{ color:#161513; }
+  form.rsvp-form input::placeholder{ color:rgba(255,255,255,0.4); }
+  form.rsvp-form input:focus, form.rsvp-form select:focus{ border-bottom-color:#fff; }
+  form.rsvp-form button{
+    margin-top:8px; align-self:flex-start;
+    background:#fff; color:var(--ink);
+    border:none; padding:15px 30px;
+    font-family:'Inter', sans-serif; font-size:0.9rem; letter-spacing:0.02em;
+    cursor:pointer;
+    transition:opacity .2s;
+  }
+  form.rsvp-form button:hover{ opacity:0.8; }
+  .rsvp-note{ margin-top:18px; font-size:0.88rem; color:rgba(255,255,255,0.6); display:none; }
+  .rsvp-note.show{ display:block; }
+
+  footer{
+    text-align:center; padding:40px 28px;
+    font-size:0.82rem; color:var(--stone);
+  }
+
+  @media (max-width: 860px){
+    header.nav{ padding:20px 24px; }
+    .nav-links{ display:none; }
+    .contact-btn{ padding:8px 16px; font-size:0.78rem; }
+    .hero{ padding:120px 24px 60px; }
+    section{ padding:72px 24px; }
+    .detail-grid{ grid-template-columns:1fr; row-gap:36px; }
+    .detail-card{ border-left:none; padding-left:0; border-top:1px solid var(--line); padding-top:28px; }
+    .detail-card:first-child{ border-top:none; padding-top:0; }
+    .rsvp-body{ grid-template-columns:1fr; gap:36px; }
+    .field-row{ grid-template-columns:1fr; }
+    .tl-item{ grid-template-columns:88px 1fr; gap:18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <span class="nav-mark">P + A</span>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#invitation">Invitation</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#rsvp">RSVP</a></li>
+    </ul>
+    <!-- Replace this number with the couple's WhatsApp number, country code first, no spaces or symbols -->
+    <a class="contact-btn" href="https://wa.me/260000000000" target="_blank" rel="noopener">Contact us</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">The Daka and Muchinga families joyfully invite you</div>
+    <h1>Panyikani<br>&amp; Angela</h1>
+    <div class="date-line">Saturday, 27 May 2023 · 4 Pillers, Kafue Road, Lusaka</div>
+  </div>
+</section>
+
+<section class="invitation" id="invitation">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="label">01 — The invitation</span>
+      <h2>Our wedding invitation</h2>
+    </div>
+    <div class="invite-frame reveal">
+      <img src="invitation.jpg" alt="Panyikani and Angela's wedding invitation">
+    </div>
+    <p class="invite-caption reveal">Feel free to save or share this card with anyone celebrating with us.</p>
+  </div>
+</section>
+
+<section class="details" id="details">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="label">02 — The day</span>
+      <h2>Details</h2>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-card reveal">
+        <div class="idx">Date</div>
+        <h3>27 May 2023</h3>
+        <p>Saturday, 10:30 HRS</p>
+      </div>
+      <div class="detail-card reveal">
+        <div class="idx">Venue</div>
+        <h3>4 Pillers</h3>
+        <p>Kafue Road, Lusaka</p>
+      </div>
+      <div class="detail-card reveal">
+        <div class="idx">Gifts</div>
+        <h3>Your presence</h3>
+        <p>If you'd like to bless us with a gift, kindly let it be in monetary form</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="schedule" id="schedule">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="label">03 — Timing</span>
+      <h2>Schedule</h2>
+    </div>
+    <div class="tl-row">
+      <div class="tl-item reveal">
+        <div class="tl-time">10:00</div>
+        <div class="tl-body">
+          <h4>Ceremony</h4>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">10:30</div>
+        <div class="tl-body">
+          <h4>Yes, I do</h4>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">11:00</div>
+        <div class="tl-body">
+          <h4>Photos</h4>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">15:00</div>
+        <div class="tl-body">
+          <h4>Dinner</h4>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">16:00</div>
+        <div class="tl-body">
+          <h4>Cake</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rsvp" id="rsvp">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="label">04 — Join us</span>
+      <h2>RSVP</h2>
+    </div>
+    <div class="rsvp-body">
+      <div class="reveal">
+        <p>We joyfully require your presence as we celebrate. Kindly let us know if you'll be attending.</p>
+        <p class="gift-note">If you wish to bless us with a gift, kindly let it be in monetary form.</p>
+      </div>
+      <form class="rsvp-form reveal" onsubmit="handleRsvp(event)">
+        <div class="field-row">
+          <input type="text" placeholder="Full name" required>
+          <input type="email" placeholder="Email address" required>
+        </div>
+        <div class="field-row">
+          <select required>
+            <option value="" disabled selected>Will you be attending?</option>
+            <option value="yes">Joyfully accepts</option>
+            <option value="no">Regretfully declines</option>
+          </select>
+          <input type="number" min="0" placeholder="Number of guests">
+        </div>
+        <button type="submit">Send RSVP</button>
+        <p class="rsvp-note" id="rsvp-note">Thank you — your RSVP has been noted.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  With love, Panyikani &amp; Angela — see you on the 27th.
+</footer>
+
+<script>
+  function handleRsvp(e){
+    e.preventDefault();
+    // Front-end placeholder only. To actually collect RSVPs, connect this
+    // to a form service (e.g. Formspree, Google Forms) or your own backend.
+    const note = document.getElementById('rsvp-note');
+    note.classList.add('show');
+    e.target.reset();
+  }
+
+  // Subtle fade-up as sections scroll into view
+  const revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in-view'));
+  }
+</script>
+
+</body>
+</html>
