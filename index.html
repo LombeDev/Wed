@@ -5,22 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Martin &amp; Ngibo — 23 September 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Pinyon+Script&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#F8F6EE;
-    --ink:#3B4630;
-    --stone:#78826A;
-    --line:rgba(59,70,48,0.16);
-    --glass:rgba(255,255,255,0.58);
-    --glass-strong:rgba(255,255,255,0.78);
+    --cream:#FBF7F1;
+    --ink:#3A2620;
+    --accent:#8B3A2C;
+    --stone:#8C7A6E;
+    --line:rgba(139,58,44,0.18);
+    --glass:rgba(255,255,255,0.62);
+    --glass-strong:rgba(255,255,255,0.88);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
     background:
-      radial-gradient(circle at 12% 8%, #EAF0DF 0%, transparent 40%),
-      radial-gradient(circle at 88% 92%, #EAF0DF 0%, transparent 40%),
+      radial-gradient(circle at 12% 8%, #F3E6DC 0%, transparent 40%),
+      radial-gradient(circle at 88% 92%, #F3E6DC 0%, transparent 40%),
       var(--cream);
     color:var(--ink);
     font-family:'Inter', sans-serif;
@@ -59,7 +60,7 @@
   .contact-btn{
     text-decoration:none;
     font-size:0.8rem; letter-spacing:0.02em;
-    color:#fff; background:var(--ink);
+    color:#fff; background:var(--accent);
     padding:10px 22px;
     border-radius:999px;
     transition:opacity .2s;
@@ -81,7 +82,7 @@
   }
   h2.section-title{
     text-align:center; font-family:'Fraunces', serif; font-weight:400;
-    font-size:2rem; margin-bottom:48px;
+    font-size:2rem; margin-bottom:48px; color:var(--accent);
   }
   .glass-card{
     background:var(--glass);
@@ -91,81 +92,62 @@
     padding:52px 40px;
   }
 
-  /* ---------- cover ---------- */
-  .cover{
-    min-height:100vh; display:flex; align-items:center; justify-content:center;
-    padding:80px 28px;
+  /* ---------- hero (mirrors the real invitation) ---------- */
+  .hero{ position:relative; }
+  .hero-photo{ width:100%; height:300px; overflow:hidden; }
+  .hero-photo img{ width:100%; height:100%; object-fit:cover; object-position:center top; }
+  .hero-arch{
+    max-width:560px; margin:-90px auto 0;
+    background:var(--glass-strong);
+    backdrop-filter:blur(10px);
+    border-radius:280px 280px 0 0;
+    padding:90px 36px 50px;
+    text-align:center;
+    position:relative; z-index:2;
+    box-shadow:0 30px 60px -30px rgba(58,38,32,0.25);
   }
-  .cover-inner{ text-align:center; position:relative; z-index:1; }
-  .heart-badge{
-    width:64px; height:64px; border-radius:50%;
-    background:var(--ink);
-    display:flex; align-items:center; justify-content:center;
-    margin:0 auto 34px;
-    animation:pulse 3.5s ease-in-out infinite;
+  .hero-eyebrow{
+    font-size:0.9rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--accent); line-height:1.6; margin-bottom:18px;
   }
-  .heart-badge svg{ width:24px; height:24px; }
-  @keyframes pulse{
-    0%,100%{ transform:scale(1); }
-    50%{ transform:scale(1.08); }
+  .hero-names{ margin-bottom:10px; }
+  .hero-names .script{
+    display:block; font-family:'Pinyon Script', cursive; color:var(--accent);
+    font-size:clamp(3rem, 11vw, 5rem); line-height:1.15;
   }
-  .cover h1{
-    font-family:'Fraunces', serif; font-weight:300; font-style:italic;
-    font-size:clamp(2.6rem, 8vw, 4.6rem);
-    line-height:1.15;
+  .hero-names .amp{ font-size:0.6em; margin-right:10px; vertical-align:middle; }
+  .hero-invite{
+    font-size:1.05rem; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--accent); margin:22px 0 30px; line-height:1.7;
   }
-  .cover .amp{ display:block; font-size:0.5em; margin:6px 0; opacity:0.7; }
-  .cover .rule{
-    display:flex; align-items:center; justify-content:center; gap:16px;
-    margin:30px auto; max-width:220px;
+  .hero-invite .small{ font-size:0.75em; color:var(--stone); letter-spacing:0.08em; }
+  .hero-meta-row{
+    display:flex; align-items:center; justify-content:center; gap:20px;
+    flex-wrap:wrap; margin-bottom:30px; font-size:0.92rem;
   }
-  .cover .rule span{ height:1px; flex:1; background:var(--line); }
-  .cover .date{ font-size:1.05rem; letter-spacing:0.03em; margin-top:8px; }
-  .cover .tagline{ margin-top:6px; font-size:0.95rem; color:var(--stone); }
-  .open-btn{
-    margin-top:40px;
-    display:inline-block;
-    background:var(--ink); color:#fff;
-    text-decoration:none;
-    font-size:0.9rem; letter-spacing:0.03em;
-    padding:16px 38px;
-    border-radius:999px;
-    transition:transform .3s ease, opacity .3s ease;
-    animation:fadeUp 1s ease 0.4s both;
+  .meta-item{ display:flex; flex-direction:column; align-items:center; gap:8px; max-width:180px; }
+  .meta-item svg{ width:26px; height:26px; }
+  .meta-divider{ width:1px; height:44px; background:var(--line); }
+  .hero-rsvp{
+    display:inline-block; text-decoration:none;
+    color:var(--accent); font-size:1.1rem; letter-spacing:0.05em; text-transform:uppercase;
+    border-bottom:1px solid var(--accent); padding-bottom:4px;
+    transition:opacity .2s;
   }
-  .open-btn:hover{ transform:translateY(-2px); opacity:0.9; }
+  .hero-rsvp:hover{ opacity:0.7; }
+  .hero-reception{ position:relative; min-height:240px; }
+  .hero-reception img{ width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+  .hero-reception-text{
+    position:relative; z-index:1; text-align:center; padding:44px 20px;
+    background:linear-gradient(180deg, rgba(251,247,241,0.9) 0%, rgba(251,247,241,0.6) 55%, rgba(251,247,241,0.9) 100%);
+  }
+  .reception-label{ font-size:0.9rem; letter-spacing:0.05em; color:var(--stone); margin-bottom:6px; }
+  .reception-venue{ font-family:'Fraunces', serif; font-size:1.3rem; color:var(--accent); }
+
   @keyframes fadeUp{
     from{ opacity:0; transform:translateY(14px); }
     to{ opacity:1; transform:translateY(0); }
   }
-
-  /* ---------- ceremony ---------- */
-  .ceremony-frame{
-    max-width:520px; margin:0 auto;
-    border-radius:200px 200px 24px 24px;
-    background:var(--glass-strong);
-    backdrop-filter:blur(14px);
-    padding:64px 36px 44px;
-    text-align:center;
-    position:relative; z-index:1;
-  }
-  .ceremony-frame .intro{ font-size:0.92rem; color:var(--stone); max-width:34ch; margin:0 auto 18px; }
-  .ceremony-frame h1{
-    font-family:'Fraunces', serif; font-weight:300; font-style:italic;
-    font-size:clamp(2.2rem, 6vw, 3rem); line-height:1.2;
-  }
-  .ceremony-frame .amp{ display:block; font-size:0.55em; margin:2px 0; opacity:0.7; }
-  .ceremony-meta{ margin-top:38px; }
-  .ceremony-meta .venue-label{ font-size:0.82rem; letter-spacing:0.06em; color:var(--stone); }
-  .ceremony-meta .venue-name{ font-family:'Fraunces', serif; font-size:1.3rem; margin:8px 0 4px; }
-  .ceremony-meta .venue-sub{ font-size:0.92rem; color:var(--stone); }
-  .ceremony-time{
-    margin-top:28px; display:flex; align-items:center; justify-content:center; gap:14px;
-  }
-  .ceremony-time .num{
-    font-family:'Fraunces', serif; font-size:2.4rem; font-weight:400;
-  }
-  .ceremony-time .lbl{ font-size:0.8rem; letter-spacing:0.06em; color:var(--stone); }
 
   /* ---------- countdown ---------- */
   .countdown{ background:transparent; }
@@ -195,7 +177,7 @@
   .cal-grid .dow{ font-size:0.72rem; color:var(--stone); letter-spacing:0.03em; }
   .cal-grid .day-cell{ font-size:0.88rem; padding:6px 0; border-radius:50%; }
   .cal-grid .day-cell.highlight{
-    background:var(--ink); color:#fff; font-weight:500;
+    background:var(--accent); color:#fff; font-weight:500;
   }
 
   /* ---------- venue / rsvp cta ---------- */
@@ -203,7 +185,7 @@
   .rsvp-cta{ text-align:center; margin-bottom:8px; }
   .rsvp-pill{
     display:inline-block; text-decoration:none;
-    background:var(--ink); color:#fff;
+    background:var(--accent); color:#fff;
     padding:14px 36px; border-radius:999px;
     font-size:0.9rem; letter-spacing:0.03em;
     transition:transform .3s ease;
@@ -232,7 +214,7 @@
   }
   .tl-time{ text-align:right; font-size:0.95rem; padding:18px 0; color:var(--stone); }
   .tl-dot-wrap{ display:flex; flex-direction:column; align-items:center; }
-  .tl-dot{ width:10px; height:10px; border-radius:50%; background:var(--ink); margin-top:22px; flex-shrink:0; }
+  .tl-dot{ width:10px; height:10px; border-radius:50%; background:var(--accent); margin-top:22px; flex-shrink:0; }
   .tl-line{ width:1px; flex:1; background:var(--line); }
   .tl-body{ padding:18px 0; }
   .tl-body h4{ font-family:'Fraunces', serif; font-weight:400; font-size:1.1rem; }
@@ -254,7 +236,7 @@
   .wishes-form input::placeholder, .wishes-form textarea::placeholder{ color:var(--stone); }
   .wishes-form-row{ display:flex; justify-content:flex-end; }
   .send-wish-btn{
-    background:var(--ink); color:#fff; border:none;
+    background:var(--accent); color:#fff; border:none;
     padding:13px 30px; border-radius:999px;
     font-family:'Inter', sans-serif; font-size:0.88rem; letter-spacing:0.02em;
     cursor:pointer; transition:opacity .2s;
@@ -298,7 +280,8 @@
 
   @media (max-width:640px){
     section{ padding:88px 22px; }
-    .ceremony-frame{ padding:52px 24px 36px; border-radius:120px 120px 20px 20px; }
+    .hero-arch{ padding:60px 22px 36px; border-radius:160px 160px 0 0; margin-top:-60px; }
+    .hero-names .script{ font-size:clamp(2.6rem, 14vw, 3.6rem); }
     .date-row{ gap:14px; }
     .tl-item{ grid-template-columns:56px 20px 1fr; column-gap:12px; }
   }
@@ -309,14 +292,14 @@
 <!-- Reusable decorative corner flourish (simple vector leaves/blossoms, no external assets) -->
 <svg style="display:none">
   <symbol id="leaf-flourish" viewBox="0 0 160 160">
-    <g fill="none" stroke="#8A9A73" stroke-width="2" stroke-linecap="round" opacity="0.55">
+    <g fill="none" stroke="#B7846F" stroke-width="2" stroke-linecap="round" opacity="0.55">
       <path d="M10 10 C 40 20, 55 45, 50 80"/>
       <path d="M10 10 C 25 35, 20 60, 40 78"/>
       <path d="M18 18 C 30 22, 34 30, 30 40"/>
       <path d="M26 30 C 38 34, 42 44, 36 54"/>
       <path d="M14 46 C 26 48, 32 58, 26 68"/>
     </g>
-    <g fill="#C9B79C" opacity="0.8">
+    <g fill="#D9A98A" opacity="0.8">
       <circle cx="14" cy="14" r="5"/>
       <circle cx="26" cy="24" r="3.5"/>
       <circle cx="34" cy="40" r="3"/>
@@ -340,38 +323,40 @@
   </div>
 </header>
 
-<!-- ---------- Cover ---------- -->
-<section class="cover">
-  <svg class="flourish tl"><use href="#leaf-flourish"/></svg>
-  <svg class="flourish br"><use href="#leaf-flourish"/></svg>
-  <div class="cover-inner">
-    <div class="heart-badge">
-      <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 21s-7.5-4.6-10.2-9.2C.3 8.9 1.6 5 5.2 5c2 0 3.4 1.1 4.1 2.3C10 6.1 11.4 5 13.4 5c3.6 0 4.9 3.9 3.4 6.8C19.5 16.4 12 21 12 21z"/></svg>
-    </div>
-    <h1>Martin<span class="amp">&amp;</span>Ngibo</h1>
-    <div class="rule"><span></span><span></span></div>
-    <div class="date">23 September, 2026</div>
-    <div class="tagline">You're invited</div>
-    <a class="open-btn" href="#ceremony">Open Invitation</a>
+<!-- ---------- Hero (mirrors the couple's actual invitation) ---------- -->
+<section class="hero" id="ceremony">
+  <div class="hero-photo">
+    <img src="floral-top.jpg" alt="">
   </div>
-</section>
-
-<!-- ---------- Ceremony info ---------- -->
-<section id="ceremony">
-  <svg class="flourish tr"><use href="#leaf-flourish"/></svg>
-  <div class="wrap">
-    <div class="ceremony-frame">
-      <p class="intro">Together with their families</p>
-      <h1>Martin<span class="amp">&amp;</span>Ngibo</h1>
-      <div class="ceremony-meta">
-        <div class="venue-label">WEDDING CELEBRATION</div>
-        <div class="venue-name">Lusaka Civic Centre</div>
-        <div class="venue-sub">Lusaka, Zambia</div>
+  <div class="hero-arch">
+    <p class="hero-eyebrow">Together<br>with their families</p>
+    <h1 class="hero-names">
+      <span class="script">Martin</span>
+      <span class="script"><span class="amp">&amp;</span>Ngibo</span>
+    </h1>
+    <p class="hero-invite">
+      Invite you<br>
+      <span class="small">to their</span><br>
+      Wedding Celebration
+    </p>
+    <div class="hero-meta-row">
+      <div class="meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="16" cy="16" r="3"/><path d="M16 14.6v1.6l1 .8"/></svg>
+        <span>23rd September, 2026 08:00hrs</span>
       </div>
-      <div class="ceremony-time">
-        <div class="num">08:00</div>
-        <div class="lbl">HRS</div>
+      <div class="meta-divider"></div>
+      <div class="meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        <span>Lusaka Civic Centre</span>
       </div>
+    </div>
+    <a class="hero-rsvp" href="#rsvp">RSVP Online</a>
+  </div>
+  <div class="hero-reception">
+    <img src="floral-bottom.jpg" alt="">
+    <div class="hero-reception-text">
+      <p class="reception-label">Lunch Gathering</p>
+      <p class="reception-venue">Exquisite Brides, 3 Kudu Road</p>
     </div>
   </div>
 </section>
@@ -580,7 +565,7 @@
   });
 
   // ----- Scroll reveal for section titles/cards -----
-  const revealTargets = document.querySelectorAll('.glass-card, .ceremony-frame, .mini-cal, .tl-item, .section-title');
+  const revealTargets = document.querySelectorAll('.glass-card, .hero-arch, .mini-cal, .tl-item, .section-title');
   revealTargets.forEach(el => {
     el.style.opacity = 0;
     el.style.transform = 'translateY(20px)';
