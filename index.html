@@ -319,7 +319,7 @@
       <li><a href="#rsvp">RSVP</a></li>
     </ul>
     <!-- Replace this number with the couple's WhatsApp number, country code first, no spaces or symbols -->
-    <a class="contact-btn" href="https://wa.me/260000000000" target="_blank" rel="noopener">Contact us</a>
+    <a class="contact-btn" href="tel:+260974605090">Contact us</a>
   </div>
 </header>
 
@@ -447,8 +447,7 @@
         </div>
       </form>
     </div>
-    <div class="wishes-list" id="wishes-list"></div>
-    <p class="wishes-empty" id="wishes-empty">Be the first to leave a wish for Martin &amp; Ngibo.</p>
+    <p class="wishes-empty" id="wishes-empty">Sending a wish opens WhatsApp so you can send it straight to Martin &amp; Ngibo.</p>
   </div>
 </section>
 
@@ -459,17 +458,17 @@
     <div class="glass-card" style="text-align:center;">
       <p style="color:var(--stone); margin-bottom:32px;">Kindly let us know if you'll be attending.</p>
       <form id="rsvp-form" style="display:flex; flex-direction:column; gap:18px; text-align:left;">
-        <input type="text" placeholder="Full name" required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
-        <input type="email" placeholder="Email address" required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
-        <select required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
+        <input type="text" id="rsvp-name" placeholder="Full name" required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
+        <input type="email" id="rsvp-email" placeholder="Email address" required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
+        <select id="rsvp-attending" required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
           <option value="" disabled selected>Will you be attending?</option>
-          <option value="yes">Joyfully accepts</option>
-          <option value="no">Regretfully declines</option>
+          <option value="Joyfully accepts">Joyfully accepts</option>
+          <option value="Regretfully declines">Regretfully declines</option>
         </select>
         <div style="text-align:center;">
           <button type="submit" class="send-wish-btn">Send RSVP</button>
         </div>
-        <p id="rsvp-note" style="display:none; text-align:center; color:var(--stone); font-size:0.9rem;">Thank you — your RSVP has been noted.</p>
+        <p id="rsvp-note" style="display:none; text-align:center; color:var(--stone); font-size:0.9rem;">Opening your email app to send this to Martin &amp; Ngibo...</p>
       </form>
     </div>
   </div>
@@ -518,32 +517,18 @@
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // ----- Guest wishes (front-end only for this session) -----
+  // ----- Guest wishes: opens WhatsApp with a pre-filled message -----
   const wishesForm = document.getElementById('wishes-form');
-  const wishesList = document.getElementById('wishes-list');
-  const wishesEmpty = document.getElementById('wishes-empty');
   wishesForm.addEventListener('submit', function(e){
     e.preventDefault();
     const name = document.getElementById('wish-name').value.trim();
     const text = document.getElementById('wish-text').value.trim();
     if(!name || !text) return;
-    const card = document.createElement('div');
-    card.className = 'wish-card';
-    const dateStr = new Date().toLocaleDateString(undefined, { month:'numeric', day:'numeric', year:'numeric' });
-    card.innerHTML = `
-      <div class="wish-head">
-        <span class="wish-name">${name.replace(/</g,'&lt;')}</span>
-        <span class="wish-date">${dateStr}</span>
-      </div>
-      <div class="wish-text">${text.replace(/</g,'&lt;')}</div>
-    `;
-    wishesList.prepend(card);
-    wishesEmpty.style.display = 'none';
+    const message = `Wedding wish from ${name}:\n${text}`;
+    const waUrl = `https://wa.me/260974605090?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, '_blank');
     wishesForm.reset();
   });
-  // Note: wishes shown here are only visible in this browser session.
-  // To collect and display wishes from all guests, this form needs to be
-  // connected to a small backend or a service like Firebase/Formspree.
 
   // ----- Wishing well -----
   const giftBox = document.getElementById('gift-box');
@@ -555,11 +540,16 @@
     wellMessage.classList.add('show');
   });
 
-  // ----- RSVP (front-end placeholder only) -----
+  // ----- RSVP: opens a pre-filled email to the couple -----
   document.getElementById('rsvp-form').addEventListener('submit', function(e){
     e.preventDefault();
-    // To actually collect RSVPs, connect this to a form service
-    // (e.g. Formspree, Google Forms) or your own backend.
+    const name = document.getElementById('rsvp-name').value.trim();
+    const email = document.getElementById('rsvp-email').value.trim();
+    const attending = document.getElementById('rsvp-attending').value;
+    const subject = `RSVP — ${name}`;
+    const body = `Name: ${name}\nEmail: ${email}\nAttending: ${attending}`;
+    const mailUrl = `mailto:phirirachel68@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailUrl;
     document.getElementById('rsvp-note').style.display = 'block';
     e.target.reset();
   });
