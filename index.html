@@ -307,7 +307,6 @@
       <p style="color:var(--stone); margin-bottom:32px;">Kindly let us know if you'll be attending.</p>
       <form id="rsvp-form" style="display:flex; flex-direction:column; gap:18px; text-align:left;">
         <input type="text" id="rsvp-name" placeholder="Full name" required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
-        <input type="email" id="rsvp-email" placeholder="Email address" required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
         <select id="rsvp-attending" required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
           <option value="" disabled selected>Will you be attending?</option>
           <option value="Joyfully accepts">Joyfully accepts</option>
@@ -355,7 +354,7 @@
     const attending = document.getElementById('rsvp-attending').value;
     const subject = `RSVP — ${name}`;
     const body = `Name: ${name}\nEmail: ${email}\nAttending: ${attending}`;
-    const mailUrl = `mailto:lombeicloud@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailUrl = `mailto:phirirachel68@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailUrl;
     document.getElementById('rsvp-note').style.display = 'block';
     e.target.reset();
