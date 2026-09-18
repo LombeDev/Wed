@@ -15,6 +15,7 @@
     --line:rgba(139,58,44,0.18);
     --glass:rgba(255,255,255,0.62);
     --glass-strong:rgba(255,255,255,0.88);
+    --ease:cubic-bezier(0.16,1,0.3,1);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -50,7 +51,14 @@
     padding:22px 44px;
     background:rgba(248,246,238,0.75);
     backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
+    border-bottom:1px solid transparent;
+    box-shadow:0 0 0 rgba(58,38,32,0);
+    transition:box-shadow 0.5s var(--ease), border-color 0.5s var(--ease), padding 0.4s var(--ease);
+  }
+  header.nav.scrolled{
+    border-bottom-color:var(--line);
+    box-shadow:0 8px 30px -18px rgba(58,38,32,0.35);
+    padding:16px 44px;
   }
   .nav-mark{ font-family:'Fraunces', serif; font-style:italic; font-size:1.1rem; }
   .nav-right{ display:flex; align-items:center; gap:32px; }
@@ -63,10 +71,10 @@
     color:#fff; background:var(--accent);
     padding:10px 22px;
     border-radius:999px;
-    transition:opacity .2s;
+    transition:transform 0.4s var(--ease), box-shadow 0.4s var(--ease), opacity 0.3s ease;
     white-space:nowrap;
   }
-  .contact-btn:hover{ opacity:0.8; }
+  .contact-btn:hover{ transform:translateY(-2px); box-shadow:0 10px 24px -12px rgba(139,58,44,0.55); }
 
   @media (max-width:860px){
     header.nav{ padding:18px 22px; }
@@ -94,8 +102,32 @@
 
   /* ---------- hero: actual invitation photo ---------- */
   .hero{ position:relative; }
-  .hero-photo-frame{ width:100%; line-height:0; }
-  .hero-photo-frame img{ width:100%; height:auto; display:block; object-fit:cover; }
+  .hero-photo-frame{ width:100%; line-height:0; overflow:hidden; position:relative; }
+  .hero-photo-frame img{
+    width:100%; height:auto; display:block; object-fit:cover;
+    opacity:0; transform:scale(1.06);
+    animation:heroIn 1.6s var(--ease) forwards;
+    will-change:transform;
+  }
+  @keyframes heroIn{
+    from{ opacity:0; transform:scale(1.06); }
+    to{ opacity:1; transform:scale(1); }
+  }
+  .scroll-cue{
+    position:absolute; left:50%; bottom:22px; transform:translateX(-50%);
+    width:34px; height:34px; border-radius:50%;
+    background:rgba(255,255,255,0.85);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 18px rgba(58,38,32,0.18);
+    text-decoration:none;
+    animation:cueBounce 2.4s ease-in-out infinite;
+    z-index:2;
+  }
+  .scroll-cue svg{ width:14px; height:14px; }
+  @keyframes cueBounce{
+    0%, 100%{ transform:translate(-50%, 0); }
+    50%{ transform:translate(-50%, 8px); }
+  }
 
   @keyframes fadeUp{
     from{ opacity:0; transform:translateY(14px); }
@@ -141,9 +173,9 @@
     background:var(--accent); color:#fff;
     padding:14px 36px; border-radius:999px;
     font-size:0.9rem; letter-spacing:0.03em;
-    transition:transform .3s ease;
+    transition:transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
   }
-  .rsvp-pill:hover{ transform:translateY(-2px); }
+  .rsvp-pill:hover{ transform:translateY(-3px); box-shadow:0 14px 30px -14px rgba(139,58,44,0.5); }
   .venue-info{ text-align:center; margin:44px 0 26px; }
   .venue-info h3{ font-family:'Fraunces', serif; font-weight:400; font-size:1.5rem; margin-bottom:8px; }
   .venue-info p{ color:var(--stone); }
@@ -151,12 +183,16 @@
     max-width:560px; margin:0 auto; border-radius:22px; overflow:hidden;
     border:1px solid var(--line);
     aspect-ratio:16/11;
+    transition:box-shadow 0.4s var(--ease);
   }
+  .map-frame:hover{ box-shadow:0 20px 40px -24px rgba(58,38,32,0.4); }
   .map-frame iframe{ width:100%; height:100%; border:0; }
   .directions-link{
     display:flex; align-items:center; justify-content:center; gap:8px;
     text-align:center; margin-top:22px; font-size:0.92rem; text-decoration:none;
+    transition:gap 0.3s var(--ease), opacity 0.3s ease;
   }
+  .directions-link:hover{ gap:12px; opacity:0.75; }
 
   /* ---------- schedule ---------- */
   .schedule{ background:transparent; }
@@ -167,7 +203,19 @@
   }
   .tl-time{ text-align:right; font-size:0.95rem; padding:18px 0; color:var(--stone); }
   .tl-dot-wrap{ display:flex; flex-direction:column; align-items:center; }
-  .tl-dot{ width:10px; height:10px; border-radius:50%; background:var(--accent); margin-top:22px; flex-shrink:0; }
+  .tl-dot{
+    width:10px; height:10px; border-radius:50%; background:var(--accent);
+    margin-top:22px; flex-shrink:0; position:relative;
+  }
+  .tl-dot::after{
+    content:""; position:absolute; inset:-6px; border-radius:50%;
+    border:1px solid var(--accent); opacity:0;
+    animation:dotPulse 2.8s ease-out infinite;
+  }
+  @keyframes dotPulse{
+    0%{ transform:scale(0.6); opacity:0.6; }
+    100%{ transform:scale(1.8); opacity:0; }
+  }
   .tl-line{ width:1px; flex:1; background:var(--line); }
   .tl-body{ padding:18px 0; }
   .tl-body h4{ font-family:'Fraunces', serif; font-weight:400; font-size:1.1rem; }
@@ -177,9 +225,9 @@
     background:var(--accent); color:#fff; border:none;
     padding:13px 30px; border-radius:999px;
     font-family:'Inter', sans-serif; font-size:0.88rem; letter-spacing:0.02em;
-    cursor:pointer; transition:opacity .2s;
+    cursor:pointer; transition:transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
   }
-  .send-wish-btn:hover{ opacity:0.85; }
+  .send-wish-btn:hover{ transform:translateY(-2px); box-shadow:0 12px 26px -14px rgba(139,58,44,0.55); }
 
   footer{
     text-align:center; padding:56px 28px 44px;
@@ -193,6 +241,12 @@
     .hero-names .script{ font-size:clamp(2.8rem, 15vw, 3.6rem); }
     .date-row{ gap:14px; }
     .tl-item{ grid-template-columns:56px 20px 1fr; column-gap:12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-photo-frame img{ animation:none; opacity:1; transform:none; }
+    .scroll-cue{ animation:none; }
+    .tl-dot::after{ animation:none; display:none; }
   }
 </style>
 </head>
@@ -235,6 +289,9 @@
 <section class="hero" id="ceremony">
   <div class="hero-photo-frame">
     <img src="invitation.jpg" alt="Martin and Ngibo's wedding invitation">
+    <a class="scroll-cue" href="#countdown" aria-label="Scroll down">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
   </div>
 </section>
 
@@ -293,7 +350,18 @@
   </div>
 </section>
 
-
+<!-- ---------- Schedule ---------- -->
+<section class="schedule" id="schedule">
+  <div class="wrap">
+    <h2 class="section-title">Wedding Day Schedule</h2>
+    <div class="tl-row">
+      <div class="tl-item">
+        <div class="tl-time">08:00</div>
+        <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <h4>Wedding celebration</h4>
+          <p>Lusaka Civic Centre</p>
+        </div>
       </div>
     </div>
   </div>
@@ -307,10 +375,11 @@
       <p style="color:var(--stone); margin-bottom:32px;">Kindly let us know if you'll be attending.</p>
       <form id="rsvp-form" style="display:flex; flex-direction:column; gap:18px; text-align:left;">
         <input type="text" id="rsvp-name" placeholder="Full name" required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
+        <input type="email" id="rsvp-email" placeholder="Email address" required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
         <select id="rsvp-attending" required style="width:100%; background:var(--glass-strong); border:1px solid rgba(255,255,255,0.7); border-radius:16px; padding:16px 18px; font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:300; color:var(--ink); outline:none;">
           <option value="" disabled selected>Will you be attending?</option>
           <option value="Joyfully accepts">Joyfully accepts</option>
-        
+          <option value="Regretfully declines">Regretfully declines</option>
         </select>
         <div style="text-align:center;">
           <button type="submit" class="send-wish-btn">Send RSVP</button>
@@ -360,26 +429,47 @@
     e.target.reset();
   });
 
-  // ----- Scroll reveal for section titles/cards -----
-  const revealTargets = document.querySelectorAll('.glass-card, .mini-cal, .tl-item, .section-title');
-  revealTargets.forEach(el => {
-    el.style.opacity = 0;
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-  });
-  if('IntersectionObserver' in window){
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.style.opacity = 1;
-          entry.target.style.transform = 'translateY(0)';
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-    revealTargets.forEach(el => obs.observe(el));
-  } else {
+  // ----- Nav: gains a shadow once the page is scrolled -----
+  const navEl = document.querySelector('header.nav');
+  function updateNavState(){
+    if(window.scrollY > 40){ navEl.classList.add('scrolled'); }
+    else{ navEl.classList.remove('scrolled'); }
+  }
+  updateNavState();
+  window.addEventListener('scroll', updateNavState, { passive:true });
+
+  // ----- Scroll reveal: fades sections up as they enter, staggered per section -----
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealTargets = document.querySelectorAll(
+    '.glass-card, .mini-cal, .tl-item, .section-title, .eyebrow, .venue-info, .map-frame, .directions-link, .rsvp-cta, .time-big, .date-row, .year-line, .countdown-value'
+  );
+  if(prefersReducedMotion){
     revealTargets.forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+  } else {
+    const staggerCount = new WeakMap();
+    revealTargets.forEach(el => {
+      const scope = el.closest('section') || document.body;
+      const idx = staggerCount.get(scope) || 0;
+      staggerCount.set(scope, idx + 1);
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(18px)';
+      el.style.transition = `opacity 0.9s var(--ease), transform 0.9s var(--ease)`;
+      el.style.transitionDelay = `${Math.min(idx * 0.08, 0.32)}s`;
+    });
+    if('IntersectionObserver' in window){
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            entry.target.style.opacity = 1;
+            entry.target.style.transform = 'translateY(0)';
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      revealTargets.forEach(el => obs.observe(el));
+    } else {
+      revealTargets.forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+    }
   }
 </script>
 
