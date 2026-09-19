@@ -92,9 +92,85 @@
   }
   .icon-btn .toast.show{ opacity:1; transform:translateY(0); }
 
+  .hamburger-btn{ display:none; }
+  .hamburger-icon{
+    width:16px; height:11px; position:relative;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .hamburger-icon span{
+    display:block; width:100%; height:1.6px; background:currentColor;
+    transition:transform 0.35s var(--ease), opacity 0.25s ease;
+  }
+  .hamburger-btn.open .hamburger-icon span:nth-child(1){ transform:translateY(4.7px) rotate(45deg); }
+  .hamburger-btn.open .hamburger-icon span:nth-child(2){ opacity:0; }
+  .hamburger-btn.open .hamburger-icon span:nth-child(3){ transform:translateY(-4.7px) rotate(-45deg); }
+
+  .mobile-menu-overlay{
+    position:fixed; inset:0; z-index:35;
+    background:rgba(30,20,16,0.32);
+    opacity:0; pointer-events:none;
+    transition:opacity 0.35s ease;
+  }
+  .mobile-menu-overlay.show{ opacity:1; pointer-events:auto; }
+
+  .mobile-menu{
+    position:fixed; top:0; right:0; bottom:0; z-index:40;
+    width:78%; max-width:320px;
+    background:var(--glass-strong);
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    box-shadow:-20px 0 50px -20px rgba(58,38,32,0.35);
+    padding:100px 36px 40px;
+    display:flex; flex-direction:column;
+    transform:translateX(100%);
+    transition:transform 0.45s var(--ease);
+  }
+  .mobile-menu.open{ transform:translateX(0); }
+  .mobile-menu ul{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .mobile-menu li{
+    opacity:0; transform:translateX(14px);
+    transition:opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  }
+  .mobile-menu.open li{ opacity:1; transform:translateX(0); }
+  .mobile-menu.open li:nth-child(1){ transition-delay:0.08s; }
+  .mobile-menu.open li:nth-child(2){ transition-delay:0.14s; }
+  .mobile-menu.open li:nth-child(3){ transition-delay:0.20s; }
+  .mobile-menu.open li:nth-child(4){ transition-delay:0.26s; }
+  .mobile-menu a{
+    display:block; text-decoration:none; color:var(--ink);
+    font-family:'Fraunces', serif; font-size:1.4rem; font-weight:400;
+    padding:14px 0; border-bottom:1px solid var(--line);
+  }
+  .mobile-menu .mobile-contact{
+    margin-top:32px; text-align:center; text-decoration:none;
+    color:#fff; background:var(--accent);
+    padding:14px 22px; border-radius:999px;
+    font-family:'Inter', sans-serif; font-size:0.9rem; letter-spacing:0.02em;
+    opacity:0; transform:translateY(10px);
+    transition:opacity 0.4s var(--ease) 0.3s, transform 0.4s var(--ease) 0.3s;
+  }
+  .mobile-menu.open .mobile-contact{ opacity:1; transform:translateY(0); }
+  .mobile-menu-actions{
+    margin-top:14px; display:flex; gap:10px;
+    opacity:0; transform:translateY(10px);
+    transition:opacity 0.4s var(--ease) 0.36s, transform 0.4s var(--ease) 0.36s;
+  }
+  .mobile-menu.open .mobile-menu-actions{ opacity:1; transform:translateY(0); }
+  .mobile-menu-actions button{
+    flex:1; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:transparent; border:1px solid var(--line); color:var(--accent);
+    padding:12px 14px; border-radius:999px; cursor:pointer;
+    font-family:'Inter', sans-serif; font-size:0.85rem;
+    transition:background 0.3s ease, border-color 0.3s ease;
+  }
+  .mobile-menu-actions button svg{ width:15px; height:15px; }
+  .mobile-menu-actions button:hover{ background:var(--glass-strong); border-color:var(--accent); }
+
   @media (max-width:860px){
     header.nav{ padding:18px 22px; }
     .nav-links{ display:none; }
+    .contact-btn{ display:none; }
+    .icon-btn{ display:none; }
+    .hamburger-btn{ display:inline-flex; }
   }
 
   section{ position:relative; padding:120px 28px; overflow:hidden; }
@@ -296,7 +372,8 @@
   .print-address{ display:none; }
   @media print{
     header.nav, .scroll-cue, .cal-cta, #rsvp, footer,
-    .directions-link, .icon-btn, .map-frame iframe, .map-pin-badge{ display:none !important; }
+    .directions-link, .icon-btn, .map-frame iframe, .map-pin-badge,
+    .mobile-menu, .mobile-menu-overlay{ display:none !important; }
     body{ background:#fff !important; }
     section{ padding:14px 6px !important; overflow:visible !important; }
     .glass-card{ background:#fff !important; box-shadow:none !important; border:1px solid #ccc !important; backdrop-filter:none !important; }
@@ -325,8 +402,32 @@
     <button type="button" class="icon-btn" id="print-btn" aria-label="Print this invitation">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="13" width="12" height="8"/><path d="M6 17H3v-4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4h-3"/></svg>
     </button>
+    <button type="button" class="hamburger-btn" id="hamburger-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="hamburger-icon"><span></span><span></span><span></span></span>
+    </button>
   </div>
 </header>
+
+<div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+<nav class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <ul>
+    <li><a href="#ceremony">Ceremony</a></li>
+    <li><a href="#venue">Venue</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#rsvp">RSVP</a></li>
+  </ul>
+  <a class="mobile-contact" href="tel:+260974605090">Contact us</a>
+  <div class="mobile-menu-actions">
+    <button type="button" id="mobile-share-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.5l6.8-3.8M8.6 13.5l6.8 3.8"/></svg>
+      Share
+    </button>
+    <button type="button" id="mobile-print-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="13" width="12" height="8"/><path d="M6 17H3v-4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4h-3"/></svg>
+      Print
+    </button>
+  </div>
+</nav>
 
 <section class="hero" id="ceremony">
   <div class="hero-photo-frame">
@@ -599,9 +700,8 @@
   }, { passive:true });
 
   // Share button — native share sheet where available, otherwise copy the link
-  const shareBtn = document.getElementById('share-btn');
   const shareToast = document.getElementById('share-toast');
-  shareBtn.addEventListener('click', async () => {
+  async function shareSite(){
     const shareData = {
       title: 'Martin & Ngibo — 23 September 2026',
       text: "You're invited to Martin & Ngibo's wedding celebration!",
@@ -613,17 +713,49 @@
     }
     try{
       await navigator.clipboard.writeText(window.location.href);
-      shareToast.classList.add('show');
-      setTimeout(() => shareToast.classList.remove('show'), 1800);
+      if(shareToast){
+        shareToast.classList.add('show');
+        setTimeout(() => shareToast.classList.remove('show'), 1800);
+      }
     }catch(err){
       window.prompt('Copy this link:', window.location.href);
     }
-  });
+  }
+  function printSite(){ window.print(); }
 
-  // Print button
-  document.getElementById('print-btn').addEventListener('click', () => {
-    window.print();
+  document.getElementById('share-btn').addEventListener('click', shareSite);
+  document.getElementById('print-btn').addEventListener('click', printSite);
+
+  // Hamburger menu
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+  function openMobileMenu(){
+    hamburgerBtn.classList.add('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    mobileMenu.classList.add('open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    mobileMenuOverlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobileMenu(){
+    hamburgerBtn.classList.remove('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    mobileMenu.classList.remove('open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    mobileMenuOverlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  hamburgerBtn.addEventListener('click', () => {
+    if(mobileMenu.classList.contains('open')){ closeMobileMenu(); }
+    else{ openMobileMenu(); }
   });
+  mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+  document.querySelectorAll('.mobile-menu a').forEach(a => a.addEventListener('click', closeMobileMenu));
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeMobileMenu(); });
+  document.getElementById('mobile-share-btn').addEventListener('click', () => { closeMobileMenu(); shareSite(); });
+  document.getElementById('mobile-print-btn').addEventListener('click', () => { closeMobileMenu(); setTimeout(printSite, 300); });
 
   // Scroll Reveal Animations
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
